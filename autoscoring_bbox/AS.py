@@ -251,9 +251,11 @@ def replace_not_frequent(df, cols, perc_min=5, value_to_replace = "_ELSE_"):
     else_df = else_df.set_index('var')
     return df, else_df
     
-def replace_not_frequent_2(df, cols, num_min=100, value_to_replace = "_ELSE_"):
+def replace_not_frequent_2(df, cols, num_min=100, value_to_replace = "_ELSE_", ignore_vars=[]):
     else_df = pd.DataFrame(columns=['var', 'list'])
     for i in cols:
+        if i in ignore_vars:
+            continue
         if i != 'date_requested' and i != 'credit_id':
             t = df[i].value_counts()
             q = list(t[t.values < num_min].index)
