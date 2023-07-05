@@ -223,6 +223,8 @@ def transform_category_encoding(df: pd.DataFrame, features: list, cat_encoding: 
         for cat in categories:
             if cat not in set(encoding.keys()):
                 new_df[feat] = new_df[feat].replace(cat, '_ELSE_')
+            elif pd.isna(cat):
+                new_df[feat] = new_df[feat].replace(cat, '_MISSING_')
 
         new_df[feat] = new_df[feat].map(encoding)
 
